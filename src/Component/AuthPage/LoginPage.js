@@ -1,6 +1,8 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router";
-import AuthContextApi from "../Context/AuthContext";
+
+import { useDispatch } from "react-redux";
+import { authActions } from "../Slices/AuthSlice";
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -10,8 +12,9 @@ const LoginPage = () => {
     password: "",
     cpassword: "",
   });
-  const authCtx = useContext(AuthContextApi)
+  //const authCtx = useContext(AuthContextApi)
   const navigate = useNavigate()
+  const authDispatch = useDispatch();
   const changeHandler = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => {
@@ -56,8 +59,12 @@ const LoginPage = () => {
         console.log("login state" , isLogin)
         const token = data.idToken;
         console.log(`${!isLogin ? 'login' :'Authentication'} successful`, data);
-        authCtx.onLogin(token)
-        localStorage.setItem("mail" , formData.mail)
+        //authCtx.onLogin(token)
+        console.log("token" , token)
+        authDispatch(authActions.onLogin({token}))
+        localStorage.setItem("mail" , formData.mail);
+        const currentMail = formData.mail.replace(/[@.]/g, "_")
+        localStorage.setItem('modifiedMail' , currentMail)
         navigate('/home')
       } else {
         console.log(data.error)

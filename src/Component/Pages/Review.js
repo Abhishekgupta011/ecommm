@@ -1,20 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
-import cartContextApi from "../Context/CartContext";
-import ElementsArray from "../ElementsArray";
+import { useSelector } from "react-redux";
 
 const Review = () => {
-  const ctx = useContext(cartContextApi);
+ 
+  const items = useSelector((state)=>state.cart.cartItems)
   const params = useParams();
   const [rating, setRating] = useState("");
 
-  const product = ctx.cartItems.find((item) => {
-    console.log("Checking items:", ctx.cartItems); // Logs each item's ID
+  const product = items.find((item) => {
+    console.log("Checking items:", items); // Logs each item's ID
     console.log("Checking item ID:", item.id); // Logs each item's ID
     console.log("Checking params ID:", params.productId); // Logs each item's ID
-    return item.id === params.productId;
+    return item.generatedId === params.productId;
   });
-  console.log("Checking items:", ctx.cartItems); // Logs each item's ID
+  console.log("Checking items:", items); // Logs each item's ID
   if (!product) {
     return <div>Product not found</div>;
   }

@@ -1,0 +1,96 @@
+/* General Form Styling */
+.contact-us {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Form Title */
+  .contact-us h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+  
+  /* Labels */
+  .contact-us label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  /* Input Fields */
+  .contact-us input {
+    width: 94.5%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .contact-us input:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+    outline: none;
+  }
+  
+  /* Button Styling */
+  .contact-us button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: #1a73e8;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .contact-us button:hover {
+    background-color: #155bb5;
+  }
+  
+  .contact-us button:active {
+    transform: scale(0.98);
+  }
+  
+  .contact-us button:disabled {
+    background-color: #bbb;
+    cursor: not-allowed;
+  }
+  
+  /* Animation for Button */
+  .contact-us button:disabled:hover {
+    background-color: #bbb;
+    transform: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-us {
+      padding: 15px;
+    }
+  
+    .contact-us h2 {
+      font-size: 1.5rem;
+    }
+  
+    .contact-us input {
+      font-size: 0.9rem;
+    }
+  
+    .contact-us button {
+      font-size: 1rem;
+    }
+  }
+  

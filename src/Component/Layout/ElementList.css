@@ -1,0 +1,130 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin: 20px 0;
+    font-size: 2rem;
+  }
+  
+  /* Element List */
+  .element-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    list-style: none;
+  }
+  
+  /* Element Item */
+  .element-item {
+    background-color: #fff;
+    border: 2px solid #eaeaea;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .element-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Item Image */
+  .element-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #eaeaea;
+  }
+  
+  /* Item Content */
+  .element-item p {
+    margin: 10px;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .element-item p span {
+    color: #1a73e8;
+    font-weight: bold;
+  }
+  
+  /* Buttons */
+  button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 10px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #155bb5;
+    transform: scale(1.05);
+  }
+  
+  /* Animations */
+  .element-item {
+    animation: fadeInUp 0.6s ease-in-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Navigation Links */
+  .element-item a {
+    text-decoration: none;
+    color: #1a73e8;
+    font-weight: bold;
+  }
+  
+  .element-item a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Price Highlight */
+  .element-item p {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  /* Floating Add to Cart Animation */
+  button:active {
+    animation: bounce 0.5s ease-out;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  

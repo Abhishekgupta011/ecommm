@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { Suspense, lazy, useContext, useEffect } from "react";
-import AuthContextApi from "./Component/Context/AuthContext";
+import { Suspense, lazy, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartData } from "./Component/Slices/CartSlice";
 
 // Lazy load components
 const Navbar = lazy(() => import("./Component/Layout/Navbar"));
@@ -14,34 +15,43 @@ const Review = lazy(() => import("./Component/Pages/Review"));
 const LoginPage = lazy(() => import("./Component/AuthPage/LoginPage"));
 
 function App() {
-  const authCtx = useContext(AuthContextApi);
+  //const authCtx = useContext(AuthContextApi);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   // Redirect users to the login page if not authenticated
   useEffect(() => {
-    if (!authCtx.isLoggedIn) {
+    if (!isLoggedIn) {
       navigate("/login");
-      console.log(authCtx.isLoggedIn);
-      console.log('useeffect running');
+      console.log(isLoggedIn);
+      console.log("useeffect running");
     }
-  }, [authCtx.isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate]);
+
+ // Fetch cart data when the user is logged in
+ useEffect(() => {
+  if (isLoggedIn) {
+    const modifiedMail = localStorage.getItem("modifiedMail");
+    dispatch(fetchCartData(modifiedMail));
+  }
+}, [dispatch, isLoggedIn]);
 
   return (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
-        {authCtx.isLoggedIn && <Navbar />}
+        {isLoggedIn && <Navbar />}
         <main>
           <Routes>
             {/* Login Route */}
             <Route path="/login" element={<LoginPage />} />
 
             {/* Protected Routes */}
-            {authCtx.isLoggedIn ? (
+            {isLoggedIn ? (
               <>
                 <Route path="/" element={<Navigate to="/home" replace />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/contact us" element={<ContactUs />} />
+                <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/store" element={<Store />} />
                 <Route path="/store/:productId" element={<Review />} />
@@ -52,7 +62,7 @@ function App() {
             )}
           </Routes>
         </main>
-        {authCtx.isLoggedIn && <Footer />}
+        {isLoggedIn && <Footer />}
       </Suspense>
     </div>
   );

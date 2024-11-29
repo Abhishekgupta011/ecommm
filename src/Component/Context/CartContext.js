@@ -20,6 +20,31 @@ const calculateTotals = (cartItems) => ({
   totalQuantity: cartItems.reduce((acc, item) => acc + item.quantity, 0),
 });
 
+// Function to update cart data on the server
+const updateCartOnServer = async (cartItems) => {
+  const modifiedMail = localStorage.getItem("modifiedMail");
+  if (!modifiedMail) return;
+
+  try {
+    await fetch(
+      `https://optimizedcode-cbd45-default-rtdb.firebaseio.com/product/${modifiedMail}.json`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+          cartItems.reduce((acc, item) => {
+            acc[item.id] = { ...item, id: undefined }; // Remove id as Firebase uses it as the key
+            return acc;
+          }, {})
+        ),
+      }
+    );
+    console.log("Cart updated on server successfully.");
+  } catch (error) {
+    console.error("Error updating cart on server:", error);
+  }
+};
+
 // Reducer function to manage cart state
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -50,6 +75,10 @@ const cartReducer = (state, action) => {
       }
 
       const { totalAmount, totalQuantity } = calculateTotals(updatedItems);
+
+      // Call the server update function
+      updateCartOnServer(updatedItems);
+
       return {
         ...state,
         cartItems: updatedItems,
@@ -66,6 +95,10 @@ const cartReducer = (state, action) => {
       );
 
       const { totalAmount, totalQuantity } = calculateTotals(updatedItems);
+
+      // Call the server update function
+      updateCartOnServer(updatedItems);
+
       return {
         ...state,
         cartItems: updatedItems,
@@ -80,6 +113,10 @@ const cartReducer = (state, action) => {
       );
 
       const { totalAmount, totalQuantity } = calculateTotals(updatedItems);
+
+      // Call the server update function
+      updateCartOnServer(updatedItems);
+
       return {
         ...state,
         cartItems: updatedItems,
@@ -124,15 +161,14 @@ export const CartProvider = (props) => {
         if (!response.ok) throw new Error("Failed to fetch products.");
 
         const products = await response.json();
-        
+
         const productsArray = Object.entries(products || {}).map(
           ([key, value]) => ({
             ...value,
-            id: key, // Attach the key (e.g., -OC3TkbpKxvEjjNy7Jew) as the `id`
+            id: key, // Attach the key (e.g., -OC3TkbpKxvEjjNy7Jew) as the id
           })
         );
 
-        console.log("get products", productsArray.name);
         if (productsArray.length > 0) {
           dispatchCartActions({ type: "INITIALCART", products: productsArray });
         }
